@@ -10,10 +10,35 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
+    services: {}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
 
+      # ---------- PHP ----------
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo, pdo_mysql
+          coverage: none
+
+      - name: Install PHP dependencies
+        run: |
+          if [ -f composer.json ]; then
+            composer install --no-interaction --prefer-dist
+          fi
+
+      - name: Start PHP built-in server
+        run: |
+          php -S 127.0.0.1:8000 > php-server.log 2>&1 &
+          echo $! > php-server.pid
+          until curl -s http://127.0.0.1:8000 > /dev/null; do
+            sleep 1
+          done
+
+      # ---------- Python ----------
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -24,6 +49,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
+      # ---------- Chrome ----------
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      # ---------- Tests ----------
+      - name: Run UI tests
+        env:
+          BASE_URL: http://127.0.0.1:8000
         run: |
-          pytest
+          pytest tests/
+
+      # ---------- Cleanup ----------
+      - name: Stop PHP server
+        if: always()
+        run: |
+          kill $(cat php-server.pid)
