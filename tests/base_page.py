@@ -16,9 +16,9 @@ class BasePage:
     def find(self, by, locator):
         return self.driver.find_element(by, locator)
 
-    def wait_for_visible(self, by, locator):
+    def wait_for_present(self, by, locator):
         return self.wait.until(
-            EC.visibility_of_element_located((by, locator))
+            EC.presence_of_element_located((by, locator))
         )
 
     def is_element_present(self, by, locator):

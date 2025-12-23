@@ -37,10 +37,10 @@ class FeedbackPage(BasePage):
         self.submit()
 
     def wait_for_success_message(self):
-        return self.wait_for_visible(*self.SUCCESS_MESSAGE)
+        return self.wait_for_present(*self.SUCCESS_MESSAGE)
 
     def wait_for_error_message(self):
-        return self.wait_for_visible(*self.ERROR_MESSAGE)
+        return self.wait_for_present(*self.ERROR_MESSAGE)
 
     def get_success_message_text(self):
         element = self.wait_for_success_message()
