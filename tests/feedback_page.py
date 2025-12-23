@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 from base_page import BasePage
 
 class FeedbackPage(BasePage):
-    url = "http://contact-form/index.php"
+    url = "http://127.0.0.1:8000/index.php"
 
     NAME_INPUT = (By.ID, "name-input")
     EMAIL_INPUT = (By.ID, "email-input")
