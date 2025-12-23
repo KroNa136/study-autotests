@@ -16,9 +16,6 @@ def test_positive_case():
         feedback_page = FeedbackPage(driver)
         feedback_page.open()
         feedback_page.send_feedback("Alice", "alice@gmail.com", "Some message for the feedback form.")
-        message = feedback_page.get_success_message_text()
-        print(message)
-    except TimeoutException:
-        print("timeout")
+        feedback_page.get_success_message_text()
     finally:
         driver.quit()
