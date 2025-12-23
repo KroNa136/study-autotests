@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from feedback_page import FeedbackPage
 
-driver = webdriver.Edge()
+driver = webdriver.Chrome()
 
 try:
     feedbackPage = FeedbackPage(driver)
