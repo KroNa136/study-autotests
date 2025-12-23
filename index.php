@@ -1,24 +1,24 @@
 <?php
-$successMessage = '';
-$errorMessage = '';
-$name = '';
-$email = '';
-$message = '';
+$successMessage = "";
+$errorMessage = "";
+$name = "";
+$email = "";
+$message = "";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $message = trim($_POST['message'] ?? '');
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $name = trim($_POST["name"] ?? "");
+    $email = trim($_POST["email"] ?? "");
+    $message = trim($_POST["message"] ?? "");
 
-    if ($name === '' || $email === '' || $message === '') {
-        $errorMessage = 'Все поля должны быть заполнены.';
+    if ($name === "" || $email === "" || $message === "") {
+        $errorMessage = "Все поля должны быть заполнены.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errorMessage = 'Введён некорректный email.';
+        $errorMessage = "Введён некорректный email.";
     } else {
-        $successMessage = 'Сообщение успешно отправлено.';
-        $name = '';
-        $email = '';
-        $message = '';
+        $successMessage = "Сообщение успешно отправлено.";
+        $name = "";
+        $email = "";
+        $message = "";
     }
 }
 ?>
